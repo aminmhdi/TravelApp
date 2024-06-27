@@ -1,4 +1,4 @@
-package com.travel.app.cab.booking.mirco.service;
+package com;
 
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;

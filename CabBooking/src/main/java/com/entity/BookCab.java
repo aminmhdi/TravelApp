@@ -1,25 +1,31 @@
 package com.entity;
 
+import java.time.LocalDateTime;
+import java.util.Date;
+
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
+import jakarta.persistence.GeneratedValue;
+import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
 
 @Entity
 public class BookCab {
 	@Id
-	private int bcid;
+	@GeneratedValue(strategy = GenerationType.IDENTITY)
+	private int id;
 	@Column(unique = true)
 	private String email;
-	private String from;
-	private String to;
-	private int cabType;
+	private Integer cabId;
+	private LocalDateTime createdDate;
+	private LocalDateTime finishedDate;
 
-	public int getBcid() {
-		return bcid;
+	public int getId() {
+		return id;
 	}
 
-	public void setBcid(int bcid) {
-		this.bcid = bcid;
+	public void setId(int id) {
+		this.id = id;
 	}
 
 	public String getEmail() {
@@ -30,27 +36,27 @@ public class BookCab {
 		this.email = email;
 	}
 
-	public String getFrom() {
-		return from;
+	public Integer getCabId() {
+		return cabId;
 	}
 
-	public void setFrom(String from) {
-		this.from = from;
+	public void setCabId(Integer cabId) {
+		this.cabId = cabId;
 	}
 
-	public String getTo() {
-		return to;
+	public LocalDateTime getCreatedDate() {
+		return createdDate;
 	}
 
-	public void setTo(String to) {
-		this.to = to;
+	public void setCreatedDate(LocalDateTime createdDate) {
+		this.createdDate = createdDate;
 	}
 
-	public int getCabType() {
-		return cabType;
+	public LocalDateTime getFinishedDate() {
+		return finishedDate;
 	}
 
-	public void setCabType(int cabType) {
-		this.cabType = cabType;
+	public void setFinishedDate(LocalDateTime finishedDate) {
+		this.finishedDate = finishedDate;
 	}
 }
