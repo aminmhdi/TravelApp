@@ -1,10 +1,5 @@
 package com.controller;
 
-import java.awt.MediaTracker;
-import java.net.http.HttpResponse;
-
-import javax.print.attribute.standard.Media;
-
 import org.javatuples.Pair;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.MediaType;
@@ -39,8 +34,7 @@ public class BookCabController {
 	@PutMapping(value = "/{bookId}")
 	public ResponseEntity<String> endTrip(@PathVariable("bookId") int bookId) {
 		Pair<Boolean, String> result = service.Update(bookId);
-		return result.getValue0() ? 
-				ResponseEntity.ok().body(result.getValue1()) : 
-				ResponseEntity.badRequest().body(result.getValue1());
+		return result.getValue0() ? ResponseEntity.ok().body(result.getValue1())
+				: ResponseEntity.badRequest().body(result.getValue1());
 	}
 }

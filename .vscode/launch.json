@@ -1,0 +1,35 @@
+{
+    // Use IntelliSense to learn about possible attributes.
+    // Hover to view descriptions of existing attributes.
+    // For more information, visit: https://go.microsoft.com/fwlink/?linkid=830387
+    "version": "0.2.0",
+    "configurations": [
+        {
+            "type": "java",
+            "name": "Current File",
+            "request": "launch",
+            "mainClass": "${file}"
+        },
+        {
+            "type": "java",
+            "name": "EurekaServerApplication",
+            "request": "launch",
+            "mainClass": "com.travel.app.Eureka_Server.EurekaServerApplication",
+            "projectName": "Eureka-Server"
+        },
+        {
+            "type": "java",
+            "name": "cab.booking",
+            "request": "launch",
+            "mainClass": "com.Application",
+            "projectName": "cab.booking.mirco.service"
+        },
+        {
+            "type": "java",
+            "name": "cabs",
+            "request": "launch",
+            "mainClass": "com.Application",
+            "projectName": "cabs.mirco.service"
+        }
+    ]
+}
