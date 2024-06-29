@@ -6,6 +6,12 @@
     "configurations": [
         {
             "type": "java",
+            "name": "MainApplication",
+            "request": "launch",
+            "mainClass": "com.MainApplication"
+        },
+        {
+            "type": "java",
             "name": "EurekaServerApplication",
             "request": "launch",
             "mainClass": "com.travel.app.Eureka_Server.EurekaServerApplication",
@@ -31,12 +37,19 @@
             "request": "launch",
             "mainClass": "com.CabApplication",
             "projectName": "cabs.mirco.service"
+        },
+        {
+            "type": "java",
+            "name": "MainApplication",
+            "request": "launch",
+            "mainClass": "com.MainApplication",
+            "projectName": "main.app"
         }
     ],
     "compounds": [
         {
             "name": "Trave Application Debugging",
-            "configurations": ["EurekaServerApplication", "AccountingApplication", "BookingApplication", "CabApplication"]
+            "configurations": ["EurekaServerApplication", "AccountingApplication", "BookingApplication", "CabApplication", "MainApplication"]
         }
     ]
 }

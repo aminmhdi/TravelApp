@@ -1,0 +1,58 @@
+<!DOCTYPE html>
+<html
+  lang="en"
+  xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+  layout:decorate="~{_layout.html}"
+>
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>Travel Application</title>
+    <script src="content-script.js"></script>
+  </head>
+  <body>
+    <div layout:fragment="content" class="container">
+      <div class="p-3">
+        <div class="card">
+          <div class="card-header">
+            <h5 class="m-0">Available cabs</h5>
+          </div>
+          <div class="card-body">
+            <div class="row">
+              <div class="col-12">
+                <tr>
+                  <th>Driver Name</th>
+                  <th>From</th>
+                  <th>To</th>
+                  <th>Price</th>
+                </tr>
+                <tr th:each="p:${products}">
+                  <td th:text="${p.id}"></td>
+                  <td th:text="${p.pname}"></td>
+                  <td th:text="${p.price}"></td>
+                </tr>
+              </div>
+              <div class="col-12 mt-3">
+                <a class="btn btn-light" href="/cab">
+                  <svg
+                    xmlns="http://www.w3.org/2000/svg"
+                    width="16"
+                    height="16"
+                    fill="currentColor"
+                    class="bi bi-arrow-left"
+                    viewBox="0 0 16 16"
+                  >
+                    <path
+                      fill-rule="evenodd"
+                      d="M15 8a.5.5 0 0 0-.5-.5H2.707l3.147-3.146a.5.5 0 1 0-.708-.708l-4 4a.5.5 0 0 0 0 .708l4 4a.5.5 0 0 0 .708-.708L2.707 8.5H14.5A.5.5 0 0 0 15 8"
+                    ></path>
+                  </svg>
+                </a>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </body>
+</html>

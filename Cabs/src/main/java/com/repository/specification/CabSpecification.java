@@ -9,11 +9,11 @@ public class CabSpecification {
     }
 
     public static Specification<Cab> hasFrom(String from) {
-        return (root, query, criteriaBuilder) -> criteriaBuilder.equal(root.get("from"), from);
+        return (root, query, criteriaBuilder) -> criteriaBuilder.equal(root.get("cabFrom"), from);
     }
 
     public static Specification<Cab> hasTo(String to) {
-        return (root, query, criteriaBuilder) -> criteriaBuilder.equal(root.get("to"), to);
+        return (root, query, criteriaBuilder) -> criteriaBuilder.equal(root.get("cabTo"), to);
     }
 
     public static Specification<Cab> hasAvailable(Boolean available) {

@@ -1,0 +1,81 @@
+<!DOCTYPE html>
+<html
+  lang="en"
+  xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+  layout:decorate="~{_layout.html}"
+>
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>Travel Application</title>
+    <script src="content-script.js"></script>
+  </head>
+  <body>
+    <div layout:fragment="content" class="container">
+      <div class="p-3">
+        <div class="card">
+          <div class="card-header">
+            <h5 class="m-0">Search for a cab</h5>
+          </div>
+          <div class="card-body">
+            <div class="row">
+              <div class="col-12 mb-3">
+                <form action="cab/search" method="get">
+                  <div class="row">
+                    <input hidden name="pageNumber" value="1" />
+                    <input hidden name="pageSize" value="10" />
+                    <div class="col-sm-6 col-md-4 col-lg-3">
+                      <div class="form-group">
+                        <label for="from" class="form-label">From</label>
+                        <input
+                          type="text"
+                          class="form-control"
+                          id="from"
+                          name="from"
+                          placeholder="Source"
+                        />
+                      </div>
+                    </div>
+                    <div class="col-sm-6 col-md-4 col-lg-3">
+                      <div class="form-group">
+                        <label for="to" class="form-label">To</label>
+                        <input
+                          type="text"
+                          class="form-control"
+                          id="to"
+                          name="to"
+                          placeholder="Destination"
+                        />
+                      </div>
+                    </div>
+                    <div class="col-sm-6 col-md-4 col-lg-3">
+                      <div class="form-group">
+                        <label for="type" class="form-label">Type</label>
+                        <select id="type" name="type" class="form-select">
+                          <option value="1">Normal</option>
+                          <option value="2">Premium</option>
+                        </select>
+                      </div>
+                    </div>
+                    <div class="col-sm-6 col-md-4 col-lg-3">
+                      <div class="form-group">
+                        <div class="d-grid">
+                          <label for="submit" class="form-label">
+                            &nbsp;
+                          </label>
+                          <button type="submit" class="btn btn-primary">
+                            Search
+                          </button>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                </form>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </body>
+</html>
