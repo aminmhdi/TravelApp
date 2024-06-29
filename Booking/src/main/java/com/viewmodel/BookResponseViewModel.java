@@ -1,6 +1,6 @@
 package com.viewmodel;
 
-public class BookCabResponseViewModel {
+public class BookResponseViewModel {
 	private Integer bookId;
 
 	public Integer getBookId() {

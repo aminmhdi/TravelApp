@@ -1,6 +1,7 @@
 package com.entity;
 
 import java.time.LocalDateTime;
+
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
@@ -13,7 +14,7 @@ public class BookCab {
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private int id;
-	@Column(unique = true)
+	@Column(nullable = false)
 	private String email;
 	private int cabId;
 	private LocalDateTime createdDate;

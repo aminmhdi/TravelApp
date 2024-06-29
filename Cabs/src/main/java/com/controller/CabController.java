@@ -1,11 +1,14 @@
 package com.controller;
 
+import org.javatuples.Pair;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
@@ -32,7 +35,7 @@ public class CabController {
     }
 
     @PostMapping(value = "", consumes = MediaType.APPLICATION_JSON_VALUE)
-    public ResponseEntity<Object> bookCab(@RequestBody CabRequestViewModel model) {
+    public ResponseEntity<Object> create(@RequestBody CabRequestViewModel model) {
         if (model == null)
             return ResponseEntity.badRequest().body("Your request is null or empty");
         if (model.getDriverName() == null || model.getDriverName().isBlank())
@@ -47,5 +50,24 @@ public class CabController {
             return ResponseEntity.badRequest().body("Amount is required");
         Cab result = service.Create(cabMapping.ToDataModel(model));
         return ResponseEntity.ok().body(cabMapping.ToViewModel(result));
+    }
+
+    @PutMapping(value = "", consumes = MediaType.APPLICATION_JSON_VALUE)
+    public ResponseEntity<String> update(@RequestBody CabUpdateRequestViewModel model) {
+        if (model == null)
+            return ResponseEntity.badRequest().body("Your request is null or empty");
+        if (model.getId() == null || model.getId() == 0)
+            return ResponseEntity.badRequest().body("Id is required");
+        if (model.getIsAvailable() == null)
+            return ResponseEntity.badRequest().body("IsAvailable is required");
+        Pair<Boolean, String> result = service.Update(model.getId(), model.getIsAvailable());
+        return result.getValue0() ? ResponseEntity.ok().body(result.getValue1())
+                : ResponseEntity.badRequest().body(result.getValue1());
+    }
+
+    @GetMapping(value = "isAvailable/{id}")
+    public ResponseEntity<Boolean> isAvailable(@PathVariable("id") int id) {
+        boolean result = service.IsAvailable(id);
+        return ResponseEntity.ok().body(result);
     }
 }

@@ -1,6 +1,6 @@
 package com.viewmodel;
 
-public class BookCabRequestViewModel {
+public class BookRequestViewModel {
 	private String email;
 	private Integer cabId;
 

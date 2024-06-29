@@ -11,24 +11,26 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 import com.entity.BookCab;
-import com.service.BookCabService;
+import com.service.BookService;
 import com.mapping.*;
 import com.viewmodel.*;
 
 @RestController
-@RequestMapping("/BookCab")
-public class BookCabController {
+@RequestMapping("/Book")
+public class BookController {
 	@Autowired
-	BookCabService service;
+	BookService service;
+
 	@Autowired
-	BookCabMapping bookCabMapping;
+	BookMapping bookCabMapping;
 
 	@PostMapping(value = "", consumes = MediaType.APPLICATION_JSON_VALUE)
-	public ResponseEntity<Object> bookCab(@RequestBody BookCabRequestViewModel model) {
+	public ResponseEntity<Object> bookCab(@RequestBody BookRequestViewModel model) {
 		if (model == null || model.getCabId() == null || model.getEmail() == null)
 			return ResponseEntity.badRequest().body("Your cab id or email is not valid");
 		BookCab result = service.Create(bookCabMapping.ToDataModel(model));
-		return ResponseEntity.ok().body(bookCabMapping.ToViewModel(result));
+		return result != null ? ResponseEntity.ok().body(bookCabMapping.ToViewModel(result))
+				: ResponseEntity.badRequest().body("Cab is not available now!");
 	}
 
 	@PutMapping(value = "/{bookId}")

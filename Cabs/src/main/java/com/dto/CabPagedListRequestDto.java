@@ -8,6 +8,7 @@ public class CabPagedListRequestDto {
     public Integer type;
     public Long amountFrom;
     public Long amountTo;
+    public Boolean isAvailable;
 
     public int pageNumber;
     public int pageSize;
@@ -17,13 +18,15 @@ public class CabPagedListRequestDto {
     public CabPagedListRequestDto() {
     }
 
-    public CabPagedListRequestDto(String from, String to, Integer type, Long amountFrom, Long amountTo, int pageNumber,
+    public CabPagedListRequestDto(String from, String to, Integer type, Long amountFrom, Long amountTo,
+            Boolean isAvailable, int pageNumber,
             int pageSize, String orderBy, String order) {
         this.from = from;
         this.to = to;
         this.type = type;
         this.amountFrom = amountFrom;
         this.amountTo = amountTo;
+        this.isAvailable = isAvailable;
         this.pageNumber = pageNumber;
         this.pageSize = pageSize;
         this.orderBy = orderBy;
@@ -68,6 +71,14 @@ public class CabPagedListRequestDto {
 
     public void setAmountTo(Long amountTo) {
         this.amountTo = amountTo;
+    }
+
+    public Boolean getIsAvailable() {
+        return this.isAvailable;
+    }
+
+    public void setIsAvailable(Boolean isAvailable) {
+        this.isAvailable = isAvailable;
     }
 
     public int getPageNumber() {

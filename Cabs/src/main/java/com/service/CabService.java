@@ -47,6 +47,9 @@ public class CabService {
         if (search.getTo() != null && !search.getTo().isBlank())
             spec = spec.and(CabSpecification.hasTo(search.getTo()));
 
+        if (search.getIsAvailable() != null)
+            spec = spec.and(CabSpecification.hasAvailable(search.getIsAvailable()));
+
         return spec;
     }
 
@@ -64,13 +67,22 @@ public class CabService {
         Optional<Cab> result = cabRepository.findById(id);
         if (result.isPresent()) {
             Cab model = result.get();
-            if (!model.getIsAvailable())
-                return new Pair<Boolean, String>(false, "Cab is not available");
+            if (model.getIsAvailable() == isAvailable)
+                return new Pair<Boolean, String>(false, "There is no change");
             model.setIsAvailable(isAvailable);
             cabRepository.save(model);
-            return new Pair<Boolean, String>(true, "Cab is not available any more");
-        } else {
+            return new Pair<Boolean, String>(true,
+                    (isAvailable ? "Cab status is available" : "Cab status is not available"));
+        } else
             return new Pair<Boolean, String>(false, "Cab not found");
-        }
+    }
+
+    public boolean IsAvailable(int id) {
+        Optional<Cab> result = cabRepository.findById(id);
+        if (result.isPresent()) {
+            Cab model = result.get();
+            return model.getIsAvailable();
+        } else
+            return false;
     }
 }

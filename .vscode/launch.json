@@ -6,9 +6,9 @@
     "configurations": [
         {
             "type": "java",
-            "name": "Current File",
+            "name": "BookingApplication",
             "request": "launch",
-            "mainClass": "${file}"
+            "mainClass": "com.BookingApplication"
         },
         {
             "type": "java",
@@ -19,17 +19,16 @@
         },
         {
             "type": "java",
-            "name": "cab.booking",
+            "name": "CabApplication",
             "request": "launch",
-            "mainClass": "com.Application",
-            "projectName": "cab.booking.mirco.service"
-        },
-        {
-            "type": "java",
-            "name": "cabs",
-            "request": "launch",
-            "mainClass": "com.Application",
+            "mainClass": "com.CabApplication",
             "projectName": "cabs.mirco.service"
+        }
+    ],
+    "compounds": [
+        {
+            "name": "Travel Application",
+            "configurations": ["BookingApplication", "EurekaServerApplication", "CabApplication"]
         }
     ]
 }
