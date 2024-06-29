@@ -19,7 +19,7 @@ public class BookMapping {
 	}
 
 	public BookResponseViewModel ToViewModel(BookCab model) {
-		BookResponseViewModel viewModel = new BookResponseViewModel();
+		BookResponseViewModel viewModel = new BookResponseViewModel(null);
 		if (model == null)
 			return viewModel;
 		viewModel.setBookId(model.getId());

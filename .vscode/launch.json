@@ -6,16 +6,24 @@
     "configurations": [
         {
             "type": "java",
-            "name": "BookingApplication",
-            "request": "launch",
-            "mainClass": "com.BookingApplication"
-        },
-        {
-            "type": "java",
             "name": "EurekaServerApplication",
             "request": "launch",
             "mainClass": "com.travel.app.Eureka_Server.EurekaServerApplication",
             "projectName": "Eureka-Server"
+        },
+        {
+            "type": "java",
+            "name": "AccountingApplication",
+            "request": "launch",
+            "mainClass": "com.AccountingApplication",
+            "projectName": "accounting.micro.service"
+        },
+        {
+            "type": "java",
+            "name": "BookingApplication",
+            "request": "launch",
+            "mainClass": "com.BookingApplication",
+            "projectName": "cab.booking.mirco.service"
         },
         {
             "type": "java",
@@ -27,8 +35,8 @@
     ],
     "compounds": [
         {
-            "name": "Travel Application",
-            "configurations": ["BookingApplication", "EurekaServerApplication", "CabApplication"]
+            "name": "Trave Application Debugging",
+            "configurations": ["EurekaServerApplication", "AccountingApplication", "BookingApplication", "CabApplication"]
         }
     ]
 }

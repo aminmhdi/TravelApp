@@ -1,4 +1,4 @@
-package com.travel.app.cabs.mirco.service;
+package com;
 
 import org.junit.jupiter.api.Test;
 import org.springframework.boot.test.context.SpringBootTest;

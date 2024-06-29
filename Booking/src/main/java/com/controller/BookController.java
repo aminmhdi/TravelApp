@@ -16,7 +16,7 @@ import com.mapping.*;
 import com.viewmodel.*;
 
 @RestController
-@RequestMapping("/Book")
+@RequestMapping("/book")
 public class BookController {
 	@Autowired
 	BookService service;

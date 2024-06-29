@@ -1,5 +1,6 @@
 package com.service;
 
+import java.util.Map;
 import java.util.Optional;
 
 import org.javatuples.Pair;
@@ -11,9 +12,11 @@ import org.springframework.data.domain.Sort.Direction;
 import org.springframework.data.jpa.domain.Specification;
 import org.springframework.stereotype.Service;
 
+import com.dto.CabFareDto;
 import com.dto.CabPagedListRequestDto;
 import com.dto.CabPagedListResponseDto;
 import com.entity.Cab;
+import com.mapping.CabFareMapping;
 import com.repository.CabRepository;
 import com.repository.specification.CabSpecification;
 
@@ -21,6 +24,9 @@ import com.repository.specification.CabSpecification;
 public class CabService {
     @Autowired
     CabRepository cabRepository;
+
+    @Autowired
+    CabFareMapping cabFareMapping;
 
     public CabPagedListResponseDto List(CabPagedListRequestDto search) {
         Direction order = search.getOrder() == "asc" ? Direction.ASC : Direction.DESC;
@@ -84,5 +90,10 @@ public class CabService {
             return model.getIsAvailable();
         } else
             return false;
+    }
+
+    public CabFareDto GetFare(int id) {
+        Map<String, Object> data = cabRepository.getFareById(id);
+        return data != null ? cabFareMapping.ToDto(data) : null;
     }
 }

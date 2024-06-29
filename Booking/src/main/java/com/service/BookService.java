@@ -38,7 +38,7 @@ public class BookService {
 
 	private boolean isCabAvailable(int id) {
 		try {
-			String cabUrl = "http://localhost:8282/Cab/isAvailable/" + id;
+			String cabUrl = "http://localhost:8282/cab/isAvailable/" + id;
 			Boolean isAvailable = restTemplate.getForObject(cabUrl, Boolean.class);
 			return isAvailable != null ? isAvailable.booleanValue() : false;
 		} catch (Exception ex) {
@@ -49,7 +49,7 @@ public class BookService {
 
 	private void setCabAvailable(int id, boolean isAvailable) {
 		try {
-			String cabUrl = "http://localhost:8282/Cab";
+			String cabUrl = "http://localhost:8282/cab";
 			CabUpdateRequestViewModel request = new CabUpdateRequestViewModel(id, isAvailable);
 			restTemplate.put(cabUrl, request);
 		} catch (Exception ex) {

@@ -13,21 +13,23 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
+import com.dto.CabFareDto;
 import com.dto.CabPagedListRequestDto;
 import com.entity.Cab;
+import com.mapping.CabFareMapping;
 import com.mapping.CabMapping;
 import com.service.CabService;
 import com.viewmodel.*;
 
 @RestController
-@RequestMapping("/Cab")
+@RequestMapping("/cab")
 public class CabController {
-
-    @Autowired
-    CabService service;
-
     @Autowired
     CabMapping cabMapping;
+    @Autowired
+    CabFareMapping cabFareMapping;
+    @Autowired
+    CabService service;
 
     @GetMapping(value = "")
     public CabPagedListViewModel list(@ModelAttribute CabPagedListRequestDto model) {
@@ -69,5 +71,13 @@ public class CabController {
     public ResponseEntity<Boolean> isAvailable(@PathVariable("id") int id) {
         boolean result = service.IsAvailable(id);
         return ResponseEntity.ok().body(result);
+    }
+
+    @GetMapping(value = "fare/{id}")
+    public ResponseEntity<CabFareViewModel> fare(@PathVariable("id") int id) {
+        CabFareDto result = service.GetFare(id);
+        return result != null
+                ? ResponseEntity.ok().body(cabFareMapping.ToViewModel(result))
+                : ResponseEntity.notFound().build();
     }
 }
