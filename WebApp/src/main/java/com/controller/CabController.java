@@ -28,7 +28,6 @@ public class CabController {
         search.setIsAvailable(true);
         search.setOrderBy("amount");
         search.setOrder("asc");
-        System.err.println(model.toString());
         model.addAttribute("search", search);
         CabPagedListResponseViewModel cabs = cabService.SearchCab(search);
         model.addAttribute("cabs", cabs);
