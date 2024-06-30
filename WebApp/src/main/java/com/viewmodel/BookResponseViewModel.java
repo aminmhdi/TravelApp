@@ -1,8 +1,12 @@
 package com.viewmodel;
 
-public class BookResponseViewModel {
+import com.fasterxml.jackson.annotation.JsonCreator;
+import com.fasterxml.jackson.annotation.JsonProperty;
 
-    public BookResponseViewModel(Integer bookId) {
+public class BookResponseViewModel {
+    // Constructor with @JsonCreator
+    @JsonCreator
+    public BookResponseViewModel(@JsonProperty("bookId") Integer bookId) {
         this.bookId = bookId;
     }
 

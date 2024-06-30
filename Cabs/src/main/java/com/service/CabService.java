@@ -94,7 +94,7 @@ public class CabService {
 
     public CabFareDto GetFare(int id) {
         Map<String, Object> data = cabRepository.getFareById(id);
-        return data != null ? cabFareMapping.ToDto(data) : null;
+        return data != null && !data.isEmpty() ? cabFareMapping.ToDto(data) : null;
     }
 
     public Cab GetById(int id) {

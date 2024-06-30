@@ -48,8 +48,9 @@
     ],
     "compounds": [
         {
+            "stopAll": true,
             "name": "Trave Application Debugging",
-            "configurations": ["EurekaServerApplication", "AccountingApplication", "BookingApplication", "CabApplication", "MainApplication"]
+            "configurations": ["EurekaServerApplication", "AccountingApplication", "BookingApplication", "CabApplication", "MainApplication"],
         }
     ]
 }

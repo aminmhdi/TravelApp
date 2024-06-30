@@ -49,7 +49,16 @@
                       <th class="align-middle text-end">Actions</th>
                     </tr>
                     <tr th:each="p:${cabs.list}">
-                      <td class="align-middle" th:text="${p.driverName}"></td>
+                      <td class="align-middle">
+                        <a
+                          href="javascript:void(0);"
+                          title="Show income"
+                          th:data-id="${p.id}"
+                          class="cab-income"
+                        >
+                          <span th:text="${p.driverName}"></span>
+                        </a>
+                      </td>
                       <td class="align-middle" th:text="${p.from}"></td>
                       <td class="align-middle" th:text="${p.to}"></td>
                       <td class="align-middle" th:text="${p.amount}"></td>
@@ -65,7 +74,7 @@
                         <a
                           class="btn btn-sm btn-success"
                           title="Book a cab"
-                          th:href="@{/cab/book/{id}(id=${p.id})}"
+                          th:href="@{/cab/{id}(id=${p.id})}"
                         >
                           <svg
                             xmlns="http://www.w3.org/2000/svg"
@@ -231,6 +240,20 @@
           </div>
         </div>
       </div>
+      <div id="incomeModal" class="modal" tabindex="-1" role="dialog"></div>
     </div>
+    <th:block layout:fragment="scripts">
+      <script>
+        $(document).ready(function () {
+          $(".cab-income").on("click", function () {
+            const id = $(this).data("id");
+            $.get("/fare/" + id, function (data) {
+              $("#incomeModal").html(data);
+              $("#incomeModal").modal("show");
+            });
+          });
+        });
+      </script>
+    </th:block>
   </body>
 </html>

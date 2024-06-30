@@ -12,15 +12,18 @@ import com.entity.Cab;
 
 @Repository
 public interface CabRepository extends JpaRepository<Cab, Integer>, JpaSpecificationExecutor<Cab> {
-    @Query(value = "SELECT \n" + //
-            "    c.id, c.driver_name, SUM(c.amount) as fare\n" + //
-            "FROM\n" + //
-            "    travelapp.cab c\n" + //
-            "        INNER JOIN\n" + //
-            "    book_cab bc ON bc.cab_id = c.id\n" + //
-            "WHERE\n" + //
-            "\tc.id = :id and\n" + //
-            "    bc.finished_date IS NOT NULL\n" + //
+    @Query(value = "SELECT " +
+            "c.id, " +
+            "c.driver_name, " +
+            "SUM(CASE " +
+            "WHEN bc.finished_date IS NOT NULL THEN c.amount " +
+            "ELSE 0 " +
+            "END) AS fare " +
+            "FROM " +
+            "travelapp.cab c " +
+            "LEFT JOIN " +
+            "book_cab bc ON bc.cab_id = c.id " +
+            "WHERE c.id = :id " +
             "GROUP BY c.id , c.driver_name;", nativeQuery = true)
     Map<String, Object> getFareById(int id);
 }

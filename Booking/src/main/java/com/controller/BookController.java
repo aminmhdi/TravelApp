@@ -4,6 +4,7 @@ import org.javatuples.Pair;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
@@ -38,5 +39,12 @@ public class BookController {
 		Pair<Boolean, String> result = service.Update(bookId);
 		return result.getValue0() ? ResponseEntity.ok().body(result.getValue1())
 				: ResponseEntity.badRequest().body(result.getValue1());
+	}
+
+	@GetMapping(value = "/{id}")
+	public ResponseEntity<Object> getBook(@PathVariable("id") int id) {
+		BookCab result = service.Get(id);
+		return result != null ? ResponseEntity.ok().body(result)
+				: ResponseEntity.notFound().build();
 	}
 }

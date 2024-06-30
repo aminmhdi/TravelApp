@@ -1,0 +1,35 @@
+<div class="modal-dialog" role="document" th:fragment="modal">
+  <div class="modal-content">
+    <div class="modal-header">
+      <h5 class="modal-title">
+        Fair of driver: <span th:text="${fare.driverName}"></span>
+      </h5>
+      <button
+        type="button"
+        class="btn-close"
+        data-bs-dismiss="modal"
+        aria-label="Close"
+      ></button>
+    </div>
+    <div class="modal-body">
+      <div th:if="${fare != null}">
+        <div class="table-responsive">
+          <table class="table table-bordered">
+            <thead>
+              <tr>
+                <th class="align-middle">Driver</th>
+                <th class="align-middle">Income</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr>
+                <td class="align-middle" th:text="${fare.driverName}"></td>
+                <td class="align-middle" th:text="${fare.fare}"></td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

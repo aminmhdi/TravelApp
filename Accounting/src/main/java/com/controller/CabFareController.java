@@ -13,7 +13,7 @@ import com.service.CabFareService;
 
 @RestController
 @RequestMapping("/accounting/cab")
-public class CabController {
+public class CabFareController {
 
     @Autowired
     CabFareService service;

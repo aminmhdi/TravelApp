@@ -2,39 +2,50 @@ package com.controller;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
-import org.springframework.ui.Model;
+import org.springframework.web.bind.annotation.RequestParam;
 
-import com.service.CabService;
+import com.service.BookService;
 import com.viewmodel.BookRequestViewModel;
 import com.viewmodel.BookResponseViewModel;
-import com.viewmodel.CabViewModel;
+import com.viewmodel.BookViewModel;
 
 @Controller
 public class BookController {
     @Autowired
-    CabService cabService;
+    BookService bookService;
 
-    @RequestMapping(value = "/cab/book/{id}", method = RequestMethod.GET)
-    public String Index(@PathVariable("id") int id, Model model) {
-        CabViewModel cab = cabService.GetCab(id);
-        if (!cab.isIsAvailable()) {
-            model.addAttribute("message", "Cab is not available");
-            return "cab/book";
-        }
-        model.addAttribute("cab", cab);
-        return "cab/book"; // view resolver responsible to check the page inside folder.
+    @RequestMapping(value = "/book", method = RequestMethod.POST)
+    public String Book(@ModelAttribute BookRequestViewModel model) {
+        if (model.getEmail() == null || model.getEmail().isEmpty())
+            return "redirect:/cab/0";
+        if (model.getCabId() == null)
+            return "redirect:/cab/0";
+        BookResponseViewModel book = bookService.Book(model);
+        if (book == null)
+            return "redirect:/cab/0";
+        return "redirect:/booked/" + book.getBookId();
     }
 
-    @RequestMapping(value = "/cab/book", method = RequestMethod.POST)
-    public String Book(@ModelAttribute BookRequestViewModel model) {
-        BookResponseViewModel book = cabService.Book(model);
-        if (book == null)
-            return "redirect:/cab/book/0";
-        return "redirect:/cab/booked/" + book.getBookId();
+    @RequestMapping(value = "/booked/{id}", method = RequestMethod.GET)
+    public String Booked(@PathVariable("id") int id, Model model) {
+        if (id <= 0)
+            return "redirect:/cab";
+
+        BookViewModel book = bookService.Get(id);
+        model.addAttribute("book", book);
+        return "book/booked";
+    }
+
+    @RequestMapping(value = "/book/endtrip", method = RequestMethod.POST)
+    public String EndTrip(@RequestParam("id") int id) {
+        if (id <= 0)
+            return "redirect:/cab";
+        bookService.EndTrip(id);
+        return "redirect:/cab";
     }
 }

@@ -65,10 +65,15 @@ public class BookService {
 				return new Pair<Boolean, String>(false, "Trip is already finished");
 			model.setFinishedDate(LocalDateTime.now());
 			bookCabRepository.save(model);
-			setCabAvailable(id, true);
+			setCabAvailable(model.getCabId(), true);
 			return new Pair<Boolean, String>(true, "Trip is finished");
 		} else {
 			return new Pair<Boolean, String>(false, "Trip not found");
 		}
+	}
+
+	public BookCab Get(int id) {
+		Optional<BookCab> result = bookCabRepository.findById(id);
+		return result.isPresent() ? result.get() : null;
 	}
 }

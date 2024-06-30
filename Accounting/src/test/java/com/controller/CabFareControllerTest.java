@@ -17,7 +17,7 @@ import static org.mockito.Mockito.*;
 import static org.junit.jupiter.api.Assertions.*;
 
 @ExtendWith(MockitoExtension.class)
-class CabControllerTest {
+class CabFareTestController {
 
     @Mock
     private CabFareService service;
@@ -26,7 +26,7 @@ class CabControllerTest {
     private CabFareMapping cabFareMapping;
 
     @InjectMocks
-    private CabController controller;
+    private CabFareController controller;
 
     @BeforeEach
     void setUp() {
