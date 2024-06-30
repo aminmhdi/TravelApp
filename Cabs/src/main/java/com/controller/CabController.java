@@ -36,6 +36,14 @@ public class CabController {
         return cabMapping.ToPagedListViewModel(service.List(model));
     }
 
+    @GetMapping(value = "{id}")
+    public ResponseEntity<CabViewModel> get(@PathVariable("id") int id) {
+        Cab result = service.GetById(id);
+        return result != null
+                ? ResponseEntity.ok().body(cabMapping.ToViewModel(result))
+                : ResponseEntity.notFound().build();
+    }
+
     @PostMapping(value = "", consumes = MediaType.APPLICATION_JSON_VALUE)
     public ResponseEntity<Object> create(@RequestBody CabRequestViewModel model) {
         if (model == null)

@@ -1,0 +1,158 @@
+<!DOCTYPE html>
+<html
+  lang="en"
+  xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+  layout:decorate="~{_layout.html}"
+>
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>Travel Application - Take a cab</title>
+  </head>
+  <body>
+    <div layout:fragment="content" class="container">
+      <div class="p-3">
+        <div class="card">
+          <div class="card-header">
+            <h5 class="m-0">Confirmation</h5>
+          </div>
+          <div class="card-body">
+            <form method="post" action="/cab/book">
+              <div class="row">
+                <div class="col-12 mb-3">
+                  <div
+                    th:if="${cab == null}"
+                    class="alert alert-warning text-center"
+                    role="alert"
+                  >
+                    <svg
+                      xmlns="http://www.w3.org/2000/svg"
+                      width="16"
+                      height="16"
+                      fill="currentColor"
+                      class="bi bi-exclamation-triangle-fill"
+                      viewBox="0 0 16 16"
+                    >
+                      <path
+                        d="M8.982 1.566a1.13 1.13 0 0 0-1.96 0L.165 13.233c-.457.778.091 1.767.98 1.767h13.713c.889 0 1.438-.99.98-1.767zM8 5c.535 0 .954.462.9.995l-.35 3.507a.552.552 0 0 1-1.1 0L7.1 5.995A.905.905 0 0 1 8 5m.002 6a1 1 0 1 1 0 2 1 1 0 0 1 0-2"
+                      />
+                    </svg>
+                    <span th:text="${message}"></span>
+                  </div>
+                  <div th:if="${cab != null}">
+                    <div class="alert alert-warning">
+                      Do you confirm the following booking?
+                    </div>
+                    <div class="table-responsive">
+                      <table class="table table-bordered">
+                        <thead>
+                          <tr>
+                            <th class="align-middle">Driver</th>
+                            <th class="align-middle">From</th>
+                            <th class="align-middle">To</th>
+                            <th class="align-middle">Amount</th>
+                            <th class="align-middle">Type</th>
+                          </tr>
+                        </thead>
+                        <tbody>
+                          <tr>
+                            <td
+                              class="align-middle"
+                              th:text="${cab.driverName}"
+                            ></td>
+                            <td class="align-middle" th:text="${cab.from}"></td>
+                            <td class="align-middle" th:text="${cab.to}"></td>
+                            <td
+                              class="align-middle"
+                              th:text="${cab.amount}"
+                            ></td>
+                            <td class="align-middle">
+                              <span
+                                th:if="${cab.type == 1}"
+                                class="badge bg-secondary"
+                                >Normal</span
+                              >
+                              <span
+                                th:if="${cab.type == 2}"
+                                class="badge bg-warning"
+                                >Premium</span
+                              >
+                            </td>
+                          </tr>
+                        </tbody>
+                      </table>
+                    </div>
+                    <div class="row">
+                      <div class="col-12">
+                        <div class="form-group">
+                          <input
+                            type="hidden"
+                            name="cabId"
+                            th:value="${cab.id}"
+                          />
+                          <label for="emailid" class="form-label">Email</label>
+                          <input
+                            type="text"
+                            name="emailid"
+                            class="form-control"
+                            placeholder="Your email address"
+                            required="required"
+                          />
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+
+                <div class="col-12">
+                  <div class="float-start" th:if="${cab != null}">
+                    <a
+                      class="btn btn-secondary"
+                      href="/cab"
+                      title="Cancel booking"
+                    >
+                      <svg
+                        xmlns="http://www.w3.org/2000/svg"
+                        width="16"
+                        height="16"
+                        fill="currentColor"
+                        class="bi bi-arrow-left"
+                        viewBox="0 0 16 16"
+                      >
+                        <path
+                          fill-rule="evenodd"
+                          d="M15 8a.5.5 0 0 0-.5-.5H2.707l3.147-3.146a.5.5 0 1 0-.708-.708l-4 4a.5.5 0 0 0 0 .708l4 4a.5.5 0 0 0 .708-.708L2.707 8.5H14.5A.5.5 0 0 0 15 8"
+                        ></path>
+                      </svg>
+                    </a>
+                  </div>
+                  <div class="float-end">
+                    <button
+                      title="Confirm booking"
+                      type="submit"
+                      class="btn btn-primary"
+                      th:if="${cab != null}"
+                    >
+                      <svg
+                        xmlns="http://www.w3.org/2000/svg"
+                        width="16"
+                        height="16"
+                        fill="currentColor"
+                        class="bi bi-save"
+                        viewBox="0 0 16 16"
+                      >
+                        <path
+                          d="M2 1a1 1 0 0 0-1 1v12a1 1 0 0 0 1 1h12a1 1 0 0 0 1-1V2a1 1 0 0 0-1-1H9.5a1 1 0 0 0-1 1v7.293l2.646-2.647a.5.5 0 0 1 .708.708l-3.5 3.5a.5.5 0 0 1-.708 0l-3.5-3.5a.5.5 0 1 1 .708-.708L7.5 9.293V2a2 2 0 0 1 2-2H14a2 2 0 0 1 2 2v12a2 2 0 0 1-2 2H2a2 2 0 0 1-2-2V2a2 2 0 0 1 2-2h2.5a.5.5 0 0 1 0 1z"
+                        />
+                      </svg>
+                    </button>
+                  </div>
+                </div>
+              </div>
+            </form>
+          </div>
+        </div>
+      </div>
+    </div>
+  </body>
+</html>

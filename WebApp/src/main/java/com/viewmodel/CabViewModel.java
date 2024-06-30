@@ -6,21 +6,21 @@ public class CabViewModel {
     private int id;
     private String driverName;
     private int type;
-    private String cabFrom;
-    private String cabTo;
+    private String from;
+    private String to;
     private long amount;
     private boolean isAvailable;
 
     public CabViewModel() {
     }
 
-    public CabViewModel(int id, String driverName, int type, String cabFrom, String cabTo, long amount,
+    public CabViewModel(int id, String driverName, int type, String from, String to, long amount,
             boolean isAvailable) {
         this.id = id;
         this.driverName = driverName;
         this.type = type;
-        this.cabFrom = cabFrom;
-        this.cabTo = cabTo;
+        this.from = from;
+        this.to = to;
         this.amount = amount;
         this.isAvailable = isAvailable;
     }
@@ -49,20 +49,20 @@ public class CabViewModel {
         this.type = type;
     }
 
-    public String getCabFrom() {
-        return this.cabFrom;
+    public String getFrom() {
+        return this.from;
     }
 
-    public void setCabFrom(String cabFrom) {
-        this.cabFrom = cabFrom;
+    public void setFrom(String from) {
+        this.from = from;
     }
 
-    public String getCabTo() {
-        return this.cabTo;
+    public String getTo() {
+        return this.to;
     }
 
-    public void setCabTo(String cabTo) {
-        this.cabTo = cabTo;
+    public void setTo(String to) {
+        this.to = to;
     }
 
     public long getAmount() {
@@ -94,13 +94,13 @@ public class CabViewModel {
         }
         CabViewModel cab = (CabViewModel) o;
         return id == cab.id && Objects.equals(driverName, cab.driverName) && type == cab.type
-                && Objects.equals(cabFrom, cab.cabFrom) && Objects.equals(cabTo, cab.cabTo) && amount == cab.amount
+                && Objects.equals(from, cab.from) && Objects.equals(to, cab.to) && amount == cab.amount
                 && isAvailable == cab.isAvailable;
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(id, driverName, type, cabFrom, cabTo, amount, isAvailable);
+        return Objects.hash(id, driverName, type, from, to, amount, isAvailable);
     }
 
     @Override
@@ -109,8 +109,8 @@ public class CabViewModel {
                 " id='" + getId() + "'" +
                 ", driverName='" + getDriverName() + "'" +
                 ", type='" + getType() + "'" +
-                ", cabFrom='" + getCabFrom() + "'" +
-                ", cabTo='" + getCabTo() + "'" +
+                ", cabFrom='" + getFrom() + "'" +
+                ", cabTo='" + getTo() + "'" +
                 ", amount='" + getAmount() + "'" +
                 ", isAvailable='" + isIsAvailable() + "'" +
                 "}";

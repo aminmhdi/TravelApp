@@ -29,7 +29,7 @@ public class CabService {
     CabFareMapping cabFareMapping;
 
     public CabPagedListResponseDto List(CabPagedListRequestDto search) {
-        Direction order = search.getOrder() == "asc" ? Direction.ASC : Direction.DESC;
+        Direction order = search.getOrder().equalsIgnoreCase("asc") ? Direction.ASC : Direction.DESC;
         Pageable pageable = PageRequest.of(search.getPageNumber() - 1, search.getPageSize(), order, search.orderBy);
         Specification<Cab> spec = GetListQuery(search);
         Page<Cab> result = cabRepository.findAll(spec, pageable);
@@ -95,5 +95,10 @@ public class CabService {
     public CabFareDto GetFare(int id) {
         Map<String, Object> data = cabRepository.getFareById(id);
         return data != null ? cabFareMapping.ToDto(data) : null;
+    }
+
+    public Cab GetById(int id) {
+        Optional<Cab> result = cabRepository.findById(id);
+        return result.isPresent() ? result.get() : null;
     }
 }

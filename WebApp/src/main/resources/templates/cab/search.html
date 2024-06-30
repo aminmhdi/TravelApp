@@ -7,8 +7,7 @@
   <head>
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1" />
-    <title>Travel Application</title>
-    <script src="content-script.js"></script>
+    <title>Travel Application - Take a cab</title>
   </head>
   <body>
     <div layout:fragment="content" class="container">
@@ -20,19 +19,77 @@
           <div class="card-body">
             <div class="row">
               <div class="col-12">
-                <tr>
-                  <th>Driver Name</th>
-                  <th>From</th>
-                  <th>To</th>
-                  <th>Price</th>
-                </tr>
-                <tr th:each="p:${products}">
-                  <td th:text="${p.id}"></td>
-                  <td th:text="${p.pname}"></td>
-                  <td th:text="${p.price}"></td>
-                </tr>
+                <div
+                  th:if="${cabs.list.size() == 0}"
+                  class="alert alert-warning text-center"
+                  role="alert"
+                >
+                  <svg
+                    xmlns="http://www.w3.org/2000/svg"
+                    width="16"
+                    height="16"
+                    fill="currentColor"
+                    class="bi bi-exclamation-triangle-fill"
+                    viewBox="0 0 16 16"
+                  >
+                    <path
+                      d="M8.982 1.566a1.13 1.13 0 0 0-1.96 0L.165 13.233c-.457.778.091 1.767.98 1.767h13.713c.889 0 1.438-.99.98-1.767zM8 5c.535 0 .954.462.9.995l-.35 3.507a.552.552 0 0 1-1.1 0L7.1 5.995A.905.905 0 0 1 8 5m.002 6a1 1 0 1 1 0 2 1 1 0 0 1 0-2"
+                    />
+                  </svg>
+                  No cabs found
+                </div>
+                <div th:if="${cabs.list.size() > 0}" class="table-responsive">
+                  <table class="table table-stripped">
+                    <tr>
+                      <th class="align-middle">Driver</th>
+                      <th class="align-middle">From</th>
+                      <th class="align-middle">To</th>
+                      <th class="align-middle">Amount</th>
+                      <th class="align-middle">Type</th>
+                      <th class="align-middle text-end">Actions</th>
+                    </tr>
+                    <tr th:each="p:${cabs.list}">
+                      <td class="align-middle" th:text="${p.driverName}"></td>
+                      <td class="align-middle" th:text="${p.from}"></td>
+                      <td class="align-middle" th:text="${p.to}"></td>
+                      <td class="align-middle" th:text="${p.amount}"></td>
+                      <td class="align-middle">
+                        <span th:if="${p.type == 1}" class="badge bg-secondary"
+                          >Normal</span
+                        >
+                        <span th:if="${p.type == 2}" class="badge bg-warning"
+                          >Premium</span
+                        >
+                      </td>
+                      <td class="align-middle text-end">
+                        <a
+                          class="btn btn-sm btn-success"
+                          title="Book a cab"
+                          th:href="@{/cab/book/{id}(id=${p.id})}"
+                        >
+                          <svg
+                            xmlns="http://www.w3.org/2000/svg"
+                            width="16"
+                            height="16"
+                            fill="currentColor"
+                            class="bi bi-taxi-front"
+                            viewBox="0 0 16 16"
+                          >
+                            <path
+                              d="M4.862 5.276 3.906 7.19a.51.51 0 0 0 .497.731c.91-.073 2.35-.17 3.597-.17s2.688.097 3.597.17a.51.51 0 0 0 .497-.731l-.956-1.913A.5.5 0 0 0 10.691 5H5.309a.5.5 0 0 0-.447.276M4 10a1 1 0 1 1-2 0 1 1 0 0 1 2 0m10 0a1 1 0 1 1-2 0 1 1 0 0 1 2 0m-9 0a1 1 0 0 1 1-1h4a1 1 0 1 1 0 2H6a1 1 0 0 1-1-1"
+                            />
+                            <path
+                              d="M6 1a1 1 0 0 0-1 1v1h-.181A2.5 2.5 0 0 0 2.52 4.515l-.792 1.848a.8.8 0 0 1-.38.404c-.5.25-.855.715-.965 1.262L.05 9.708a2.5 2.5 0 0 0-.049.49v.413c0 .814.39 1.543 1 1.997V14.5a.5.5 0 0 0 .5.5h2a.5.5 0 0 0 .5-.5v-1.338c1.292.048 2.745.088 4 .088s2.708-.04 4-.088V14.5a.5.5 0 0 0 .5.5h2a.5.5 0 0 0 .5-.5v-1.892c.61-.454 1-1.183 1-1.997v-.413q0-.248-.049-.49l-.335-1.68a1.8 1.8 0 0 0-.964-1.261.8.8 0 0 1-.381-.404l-.792-1.848A2.5 2.5 0 0 0 11.181 3H11V2a1 1 0 0 0-1-1zM4.819 4h6.362a1.5 1.5 0 0 1 1.379.91l.792 1.847a1.8 1.8 0 0 0 .853.904c.222.112.381.32.43.564l.336 1.679q.03.146.029.294v.413a1.48 1.48 0 0 1-1.408 1.484c-1.555.07-3.786.155-5.592.155s-4.037-.084-5.592-.155A1.48 1.48 0 0 1 1 10.611v-.413q0-.148.03-.294l.335-1.68a.8.8 0 0 1 .43-.563c.383-.19.685-.511.853-.904l.792-1.848A1.5 1.5 0 0 1 4.82 4Z"
+                            />
+                          </svg>
+                        </a>
+                      </td>
+                    </tr>
+                  </table>
+                </div>
               </div>
-              <div class="col-12 mt-3">
+
+              <div class="col-3">
                 <a class="btn btn-light" href="/cab">
                   <svg
                     xmlns="http://www.w3.org/2000/svg"
@@ -48,6 +105,127 @@
                     ></path>
                   </svg>
                 </a>
+              </div>
+              <div class="col-9">
+                <ul
+                  class="pagination justify-content-end"
+                  th:if="${cabs.totalPages > 0}"
+                >
+                  <!-- Previous Page Button -->
+                  <li th:class="${search.pageNumber == 1} ? 'disabled' : ''">
+                    <a
+                      class="page-link"
+                      th:href="@{/cab/search(pageSize=${search.pageSize}, pageNumber=${search.pageNumber - 1}, from=${search.from}, to=${search.to}, type=${search.type})}"
+                    >
+                      <svg
+                        xmlns="http://www.w3.org/2000/svg"
+                        width="16"
+                        height="16"
+                        fill="currentColor"
+                        class="bi bi-arrow-left-short"
+                        viewBox="0 0 16 16"
+                      >
+                        <path
+                          fill-rule="evenodd"
+                          d="M12 8a.5.5 0 0 1-.5.5H5.707l2.147 2.146a.5.5 0 0 1-.708.708l-3-3a.5.5 0 0 1 0-.708l3-3a.5.5 0 1 1 .708.708L5.707 7.5H11.5a.5.5 0 0 1 .5.5"
+                        />
+                      </svg>
+                    </a>
+                  </li>
+
+                  <!-- First Page -->
+                  <li
+                    th:if="${search.pageNumber > 2}"
+                    th:class="${search.pageNumber == 1} ? 'active' : ''"
+                  >
+                    <a
+                      class="page-link"
+                      th:href="@{/cab/search(pageSize=${search.pageSize}, pageNumber=1, from=${search.from}, to=${search.to}, type=${search.type})}"
+                      >1</a
+                    >
+                  </li>
+
+                  <!-- Ellipsis Before Current Page -->
+                  <li th:if="${search.pageNumber > 3}" class="disabled">
+                    <span class="page-link">...</span>
+                  </li>
+
+                  <!-- One Page Before Current Page -->
+                  <li
+                    th:if="${search.pageNumber > 1}"
+                    th:class="${search.pageNumber - 1 == pageNum} ? 'active' : ''"
+                  >
+                    <a
+                      class="page-link"
+                      th:href="@{/cab/search(pageSize=${search.pageSize}, pageNumber=${search.pageNumber - 1})}"
+                      th:text="${search.pageNumber - 1}"
+                    ></a>
+                  </li>
+
+                  <!-- Current Page -->
+                  <li class="active">
+                    <span
+                      class="page-link"
+                      th:text="${search.pageNumber}"
+                    ></span>
+                  </li>
+
+                  <!-- One Page After Current Page -->
+                  <li
+                    th:if="${search.pageNumber < cabs.totalPages}"
+                    th:class="${search.pageNumber + 1 == pageNum} ? 'active' : ''"
+                  >
+                    <a
+                      class="page-link"
+                      th:href="@{/cab/search(pageSize=${search.pageSize}, pageNumber=${search.pageNumber + 1})}"
+                      th:text="${search.pageNumber + 1}"
+                    ></a>
+                  </li>
+
+                  <!-- Ellipsis After Current Page -->
+                  <li
+                    th:if="${search.pageNumber < cabs.totalPages - 2}"
+                    class="disabled"
+                  >
+                    <span class="page-link">...</span>
+                  </li>
+
+                  <!-- Last Page -->
+                  <li
+                    th:if="${search.pageNumber < cabs.totalPages - 1}"
+                    th:class="${search.pageNumber == cabs.totalPages} ? 'active' : ''"
+                  >
+                    <a
+                      class="page-link"
+                      th:href="@{/cab/search(pageSize=${search.pageSize}, pageNumber=${cabs.totalPages})}"
+                      th:text="${cabs.totalPages}"
+                    ></a>
+                  </li>
+
+                  <!-- Next Page Button -->
+                  <li
+                    th:class="${search.pageNumber == cabs.totalPages} ? 'disabled' : ''"
+                  >
+                    <a
+                      class="page-link"
+                      th:href="@{/cab/search(pageSize=${search.pageSize}, pageNumber=${search.pageNumber + 1}, from=${search.from}, to=${search.to}, type=${search.type})}"
+                    >
+                      <svg
+                        xmlns="http://www.w3.org/2000/svg"
+                        width="16"
+                        height="16"
+                        fill="currentColor"
+                        class="bi bi-arrow-right-short"
+                        viewBox="0 0 16 16"
+                      >
+                        <path
+                          fill-rule="evenodd"
+                          d="M4 8a.5.5 0 0 1 .5-.5h5.793L8.146 5.354a.5.5 0 1 1 .708-.708l3 3a.5.5 0 0 1 0 .708l-3 3a.5.5 0 0 1-.708-.708L10.293 8.5H4.5A.5.5 0 0 1 4 8"
+                        />
+                      </svg>
+                    </a>
+                  </li>
+                </ul>
               </div>
             </div>
           </div>

@@ -6,6 +6,8 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.web.client.RestTemplate;
 
+import com.viewmodel.BookRequestViewModel;
+import com.viewmodel.BookResponseViewModel;
 import com.viewmodel.CabPagedListRequestViewModel;
 import com.viewmodel.CabPagedListResponseViewModel;
 import com.viewmodel.CabViewModel;
@@ -43,4 +45,25 @@ public class CabService {
         return queryString;
     }
 
+    public CabViewModel GetCab(int id) {
+        try {
+            String cabUrl = "http://localhost:8282/cab/" + id;
+            CabViewModel response = restTemplate.getForObject(cabUrl, CabViewModel.class);
+            return response;
+        } catch (Exception ex) {
+            System.err.println(ex.getMessage());
+            return new CabViewModel();
+        }
+    }
+
+    public BookResponseViewModel Book(BookRequestViewModel model) {
+        try {
+            String cabUrl = "http://localhost:8181/book/";
+            BookResponseViewModel response = restTemplate.postForObject(cabUrl, model, BookResponseViewModel.class);
+            return response;
+        } catch (Exception ex) {
+            System.err.println(ex.getMessage());
+            return null;
+        }
+    }
 }
