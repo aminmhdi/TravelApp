@@ -7,7 +7,7 @@ services:
       MYSQL_ROOT_PASSWORD: root@123
       MYSQL_DATABASE: travelapp
     ports:
-      - 3307:3306
+      - 3306:3306
     restart: always
   EurekaServer:
     build: ./EurekaServer
