@@ -1,6 +1,7 @@
 package com.service;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.http.HttpStatusCode;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
@@ -16,7 +17,8 @@ public class BookService {
     @Autowired
     RestTemplate restTemplate;
 
-    private final String bookBaseUrl = "http://localhost:8181";
+    @Value("${book.service.url}")
+    private String bookBaseUrl;
 
     public BookResponseViewModel Book(BookRequestViewModel model) {
         try {

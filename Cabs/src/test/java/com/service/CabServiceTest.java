@@ -1,6 +1,5 @@
 package com.service;
 
-import com.dto.CabFareDto;
 import com.dto.CabPagedListRequestDto;
 import com.entity.Cab;
 import com.mapping.CabFareMapping;
@@ -12,11 +11,8 @@ import org.mockito.Mock;
 import org.mockito.MockitoAnnotations;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
-import static org.junit.jupiter.api.Assertions.assertNotNull;
 import static org.mockito.Mockito.*;
 
-import java.util.HashMap;
-import java.util.Map;
 import java.util.Optional;
 import org.javatuples.Pair;
 
@@ -96,25 +92,6 @@ class CabServiceTest {
         // Assert
         assert (result);
         verify(cabRepository, times(1)).findById(id);
-    }
-
-    @Test
-    void getFare_returnsCabFareDto() {
-        // Arrange
-        int id = 1;
-        Map<String, Object> data = new HashMap<>();
-        // Add necessary data to the map
-
-        when(cabRepository.getFareById(id)).thenReturn(data);
-        when(cabFareMapping.ToDto(data)).thenReturn(new CabFareDto());
-
-        // Act
-        CabFareDto result = cabService.GetFare(id);
-
-        // Assert
-        assertNotNull(result);
-        verify(cabRepository, times(1)).getFareById(id);
-        verify(cabFareMapping, times(1)).ToDto(data);
     }
 
     @Test

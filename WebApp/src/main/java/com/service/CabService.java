@@ -3,6 +3,7 @@ package com.service;
 import java.util.ArrayList;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
 import org.springframework.web.client.RestTemplate;
 
@@ -15,7 +16,8 @@ public class CabService {
     @Autowired
     RestTemplate restTemplate;
 
-    private final String cabBaseUrl = "http://localhost:8282";
+    @Value("${cab.service.url}")
+    private String cabBaseUrl;
 
     public CabPagedListResponseViewModel SearchCab(CabPagedListRequestViewModel model) {
         try {

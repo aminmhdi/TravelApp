@@ -1,59 +1,101 @@
 services:
-  MySql-DB:
+  mysql-db:
     image: mysql:8.0
     container_name: mysql_db
     environment:
+      MYSQL_ROOT_USER: root
       MYSQL_ROOT_PASSWORD: root@123
       MYSQL_DATABASE: travelapp
     ports:
-      - 3306:3307
-    restart: always
-  EurekaServer:
+      - "3306:3306"
+    volumes:
+      - mysql_data:/var/lib/mysql
+    restart: no
+
+  eurekaserver:
     build: ./EurekaServer/
-    image: openjdk:17
-    container_name: Eureka_Server 
+    image: eurekaserver:latest
+    container_name: eureka_server
     depends_on:
-      - MySql-DB
+      - mysql-db
     ports:
-      - 8761:8761
-    restart: always
-  Accounting:
-    build: ./Accounting/
-    image: openjdk:17
-    container_name: Accounting_Service
+      - "8761:8761"
+    restart: no
+    environment:
+      - BOOKING_SERVICE_URL=http://booking:8181
+      - CAB_SERVICE_URL=http://cabs:8282
+      - ACCOUNTING_SERVICE_URL=http://accounting:8383
+
+  webapp:
+    build: ./WebApp/
+    image: webapp:latest
+    container_name: webapp_service
     depends_on:
-      - MySql-DB
-      - EurekaServer
+      - mysql-db
+      - eurekaserver
+      - cabs
+      - booking
+      - accounting
     ports:
-      - 8383:8383
-    restart: always
-  Booking:
-    build: ./Booking/
-    image: openjdk:17
-    container_name: Booking_Service
-    depends_on:
-      - MySql-DB
-      - EurekaServer
-    ports:
-      - 8181:8181
-    restart: always
-  Cabs:
-    build: ./Cabs/
-    image: openjdk:17
-    container_name: Cabs_Service
-    depends_on:
-      - MySql-DB
-      - EurekaServer
+      - "8484:8484"
+    restart: no
+    environment:
+      - BOOKING_SERVICE_URL=http://booking:8181
+      - CAB_SERVICE_URL=http://cabs:8282
+      - ACCOUNTING_SERVICE_URL=http://accounting:8383
+      - eureka_client_serviceUrl_defaultZone=http://localhost:8761/eureka/
+
+  cabs:
+    image: cabs:latest
+    container_name: cabs_service
+    build:
+      context: ./Cabs/
+      dockerfile: Dockerfile
     ports:
       - 8282:8282
-    restart: always
-  WebApp:
-    build: ./WebApp/
-    image: openjdk:17
-    container_name: WebApp_Service
     depends_on:
-      - MySql-DB
-      - EurekaServer
+      - eurekaserver
+      - mysql-db
+    environment:
+      - SPRING_DATASOURCE_URL=jdbc:mysql://mysql-db:3306/travelapp
+      - SPRING_DATASOURCE_USERNAME=root
+      - SPRING_DATASOURCE_PASSWORD=root@123
+      - eureka_client_serviceUrl_defaultZone=http://localhost:8761/eureka/
+    restart: no
+
+  accounting:
+    build: ./Accounting/
+    image: accounting:latest
+    container_name: accounting_service
+    depends_on:
+      - mysql-db
+      - eurekaserver
+      - booking
+    environment:
+      - CAB_SERVICE_URL=http://cabs:8282
+      - eureka_client_serviceUrl_defaultZone=http://localhost:8761/eureka/
     ports:
-      - 8484:8484
-    restart: always
+      - "8383:8383"
+    restart: no
+
+  booking:
+    image: booking:latest
+    container_name: booking_service
+    build:
+      context: ./Booking/
+      dockerfile: Dockerfile
+    ports:
+      - "8181:8181"
+    depends_on:
+      - mysql-db
+      - eurekaserver
+    environment:
+      - SPRING_DATASOURCE_URL=jdbc:mysql://mysql-db:3306/travelapp
+      - SPRING_DATASOURCE_USERNAME=root
+      - SPRING_DATASOURCE_PASSWORD=root@123
+      - CAB_SERVICE_URL=http://cabs:8282
+      - eureka_client_serviceUrl_defaultZone=http://localhost:8761/eureka/
+    restart: no
+
+volumes:
+  mysql_data:

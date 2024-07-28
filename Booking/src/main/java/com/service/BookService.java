@@ -5,6 +5,7 @@ import java.util.Optional;
 
 import org.javatuples.Pair;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
 import org.springframework.web.client.RestTemplate;
 
@@ -19,6 +20,9 @@ public class BookService {
 
 	@Autowired
 	RestTemplate restTemplate;
+
+	@Value("${cab.service.url}")
+	private String cabBaseUrl;
 
 	public BookCab Create(BookCab model) {
 		if (!isCabAvailable(model.getCabId()))
@@ -38,7 +42,7 @@ public class BookService {
 
 	private boolean isCabAvailable(int id) {
 		try {
-			String cabUrl = "http://localhost:8282/cab/isAvailable/" + id;
+			String cabUrl = cabBaseUrl + "/cab/isAvailable/" + id;
 			Boolean isAvailable = restTemplate.getForObject(cabUrl, Boolean.class);
 			return isAvailable != null ? isAvailable.booleanValue() : false;
 		} catch (Exception ex) {
@@ -49,7 +53,7 @@ public class BookService {
 
 	private void setCabAvailable(int id, boolean isAvailable) {
 		try {
-			String cabUrl = "http://localhost:8282/cab";
+			String cabUrl = cabBaseUrl + "/cab";
 			CabUpdateRequestViewModel request = new CabUpdateRequestViewModel(id, isAvailable);
 			restTemplate.put(cabUrl, request);
 		} catch (Exception ex) {

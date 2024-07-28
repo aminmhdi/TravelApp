@@ -1,0 +1,5 @@
+spring:
+  application:
+    name: accounting-service
+server:
+  port: 8383
