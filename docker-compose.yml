@@ -1,0 +1,60 @@
+version: '3.8'
+services:
+  MySql-DB:
+    image: mysql:8.0
+    container_name: mysql_db
+    environment:
+      MYSQL_ROOT_PASSWORD: root@123
+      MYSQL_DATABASE: travelapp
+    ports:
+      - 3307:3306
+    restart: always
+  EurekaServer:
+    build: ./EurekaServer
+    image: openjdk:17-oracle
+    container_name: EurekaServer 
+    depends_on:
+      - MySql-DB
+    ports:
+      - 8761:8761
+    restart: always
+  Accounting:
+    build: ./Accounting
+    image: openjdk:17-oracle
+    container_name: Accounting
+    depends_on:
+      - MySql-DB
+      - EurekaServer
+    ports:
+      - 8383:8383
+    restart: always
+  Booking:
+    build: ./Booking
+    image: openjdk:17-oracle
+    container_name: Booking
+    depends_on:
+      - MySql-DB
+      - EurekaServer
+    ports:
+      - 8181:8181
+    restart: always
+  Cabs:
+    build: ./Cabs
+    image: openjdk:17-oracle
+    container_name: Cabs
+    depends_on:
+      - MySql-DB
+      - EurekaServer
+    ports:
+      - 8282:8282
+    restart: always
+  WebApp:
+    build: ./WebApp
+    image: openjdk:17-oracle
+    container_name: WebApp
+    depends_on:
+      - MySql-DB
+      - EurekaServer
+    ports:
+      - 8484:8484
+    restart: always
