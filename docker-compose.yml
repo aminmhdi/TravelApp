@@ -43,7 +43,7 @@ services:
       - BOOKING_SERVICE_URL=http://booking:8181
       - CAB_SERVICE_URL=http://cabs:8282
       - ACCOUNTING_SERVICE_URL=http://accounting:8383
-      - eureka_client_serviceUrl_defaultZone=http://localhost:8761/eureka/
+      - EUREKA_CLIENT_SERVICEURL_DEFAULTZONE=http://eurekaserver:8761/eureka/
 
   cabs:
     image: cabs:latest
@@ -60,7 +60,7 @@ services:
       - SPRING_DATASOURCE_URL=jdbc:mysql://mysql-db:3306/travelapp
       - SPRING_DATASOURCE_USERNAME=root
       - SPRING_DATASOURCE_PASSWORD=root@123
-      - eureka_client_serviceUrl_defaultZone=http://localhost:8761/eureka/
+      - EUREKA_CLIENT_SERVICEURL_DEFAULTZONE=http://eurekaserver:8761/eureka/
     restart: no
 
   accounting:
@@ -73,7 +73,7 @@ services:
       - booking
     environment:
       - CAB_SERVICE_URL=http://cabs:8282
-      - eureka_client_serviceUrl_defaultZone=http://localhost:8761/eureka/
+      - EUREKA_CLIENT_SERVICEURL_DEFAULTZONE=http://eurekaserver:8761/eureka/
     ports:
       - "8383:8383"
     restart: no
@@ -94,7 +94,7 @@ services:
       - SPRING_DATASOURCE_USERNAME=root
       - SPRING_DATASOURCE_PASSWORD=root@123
       - CAB_SERVICE_URL=http://cabs:8282
-      - eureka_client_serviceUrl_defaultZone=http://localhost:8761/eureka/
+      - EUREKA_CLIENT_SERVICEURL_DEFAULTZONE=http://eurekaserver:8761/eureka
     restart: no
 
 volumes:

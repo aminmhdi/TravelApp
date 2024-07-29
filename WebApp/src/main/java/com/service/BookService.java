@@ -17,7 +17,7 @@ public class BookService {
     @Autowired
     RestTemplate restTemplate;
 
-    @Value("${book.service.url}")
+    @Value("${booking.service.url}")
     private String bookBaseUrl;
 
     public BookResponseViewModel Book(BookRequestViewModel model) {
