@@ -1,0 +1,59 @@
+pipeline {
+    agent any
+    
+    stages {
+        stage('Checkout') {
+            steps {
+                // Checkout the project repository
+                git 'https://github.com/aminmhdi/TravelApp.git'
+            }
+        }
+        
+        stage('Build Projects') {
+            steps {
+                script {
+                    def projects = ['Accounting', 'Booking', 'Cabs', 'EurekaServer', 'WebApp']
+                    projects.each { project ->
+                        sh """
+                            cd ${project}
+                            mvn clean package
+                            cd ..
+                        """
+                    }
+                }
+            }
+        }
+        
+        stage('Docker Compose Down') {
+            steps {
+                script {
+                    // Stop and remove the services
+                    sh 'docker-compose down'
+                }
+            }
+        }
+        
+        stage('Docker Compose Up') {
+            steps {
+                script {
+                    // Build and run the services using Docker Compose
+                    sh 'docker-compose build'
+                    sh 'docker-compose up -d'
+                }
+            }
+        }
+    }
+    
+    post {
+        always {
+            // Clean workspace after build
+            cleanWs()
+        }
+        success {
+            echo 'Pipeline completed successfully.'
+        }
+        failure {
+            echo 'Pipeline failed.'
+        }
+    }
+}
